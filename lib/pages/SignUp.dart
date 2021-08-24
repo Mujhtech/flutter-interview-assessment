@@ -11,7 +11,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
-  TextEditingController confirm_password = TextEditingController();
+  TextEditingController confirmPassword = TextEditingController();
+  final formKey = GlobalKey<FormState>();
+
 
   @override
   Widget build(BuildContext context) {
@@ -53,215 +55,221 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     height: 20,
                   ),
                   Form(
+                      key: formKey,
                       child: Column(
-                    children: [
-                      TextFormField(
-                        controller: name,
-                        validator: (email) {},
-                        onChanged: (v) {},
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 20,
-                        ),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          hintText: 'Name',
-                          hintStyle: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          errorStyle: TextStyle(color: Colors.white70),
-                          suffixIcon: Icon(
-                            Icons.person,
-                            color: Colors.black45,
-                          ),
-                          fillColor: Color(0xFFFFFFFF),
-                          filled: true,
-                        ),
-                        autocorrect: false,
-                        autofocus: false,
-                      ),
-                      TextFormField(
-                        controller: email,
-                        validator: (email) {},
-                        onChanged: (v) {},
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 20,
-                        ),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          hintText: 'Email Address',
-                          hintStyle: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          errorStyle: TextStyle(color: Colors.white70),
-                          suffixIcon: Icon(
-                            Icons.email,
-                            color: Colors.black45,
-                          ),
-                          fillColor: Color(0xFFFFFFFF),
-                          filled: true,
-                        ),
-                        autocorrect: false,
-                        autofocus: false,
-                      ),
-                      TextFormField(
-                        controller: password,
-                        validator: (password) {},
-                        onChanged: (v) {},
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 20,
-                        ),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          hintText: 'Password',
-                          hintStyle: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          errorStyle: TextStyle(color: Colors.white70),
-                          suffixIcon: Icon(
-                            Icons.visibility_off,
-                            color: Colors.black45,
-                          ),
-                          fillColor: Color(0xFFFFFFFF),
-                          filled: true,
-                        ),
-                        autocorrect: false,
-                        autofocus: false,
-                      ),
-                      TextFormField(
-                        controller: confirm_password,
-                        validator: (password) {},
-                        onChanged: (v) {},
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 20,
-                        ),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          hintText: 'Confirm Password',
-                          hintStyle: TextStyle(
-                            color: Colors.black38,
-                          ),
-                          errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          errorStyle: TextStyle(color: Colors.white70),
-                          suffixIcon: Icon(
-                            Icons.visibility_off,
-                            color: Colors.black45,
-                          ),
-                          fillColor: Color(0xFFFFFFFF),
-                          filled: true,
-                        ),
-                        autocorrect: false,
-                        autofocus: false,
-                      ),
-                      MaterialButton(
-                        elevation: 0,
-                        hoverElevation: 0,
-                        focusElevation: 0,
-                        highlightElevation: 0,
-                        onPressed: () => print(0),
-                        color: Color(0xFFFFEB3C),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
-                        ),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width - 50,
-                          height: 60,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Sign Up!',
-                                style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
+                        children: [
+                          TextFormField(
+                            controller: name,
+                            validator: (email) {},
+                            onChanged: (v) {},
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 20,
+                            ),
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent, width: 0),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(10),
+                                      topRight: Radius.circular(10))),
+                              hintText: 'Name',
+                              hintStyle: TextStyle(
+                                color: Colors.black38,
                               ),
-                              Icon(Icons.arrow_forward)
-                            ],
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              errorStyle: TextStyle(color: Colors.white70),
+                              suffixIcon: Icon(
+                                Icons.person,
+                                color: Colors.black45,
+                              ),
+                              fillColor: Color(0xFFFFFFFF),
+                              filled: true,
+                            ),
+                            autocorrect: false,
+                            autofocus: false,
                           ),
-                        ),
-                      ),
-                    ],
-                  )),
+                          TextFormField(
+                            controller: email,
+                            validator: (email) {},
+                            onChanged: (v) {},
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 20,
+                            ),
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent, width: 0),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              hintText: 'Email Address',
+                              hintStyle: TextStyle(
+                                color: Colors.black38,
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              errorStyle: TextStyle(color: Colors.white70),
+                              suffixIcon: Icon(
+                                Icons.email,
+                                color: Colors.black45,
+                              ),
+                              fillColor: Color(0xFFFFFFFF),
+                              filled: true,
+                            ),
+                            autocorrect: false,
+                            autofocus: false,
+                          ),
+                          TextFormField(
+                            controller: password,
+                            validator: (password) {},
+                            onChanged: (v) {},
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 20,
+                            ),
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent, width: 0),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              hintText: 'Password',
+                              hintStyle: TextStyle(
+                                color: Colors.black38,
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              errorStyle: TextStyle(color: Colors.white70),
+                              suffixIcon: Icon(
+                                Icons.visibility_off,
+                                color: Colors.black45,
+                              ),
+                              fillColor: Color(0xFFFFFFFF),
+                              filled: true,
+                            ),
+                            autocorrect: false,
+                            autofocus: false,
+                          ),
+                          TextFormField(
+                            controller: confirmPassword,
+                            validator: (password) {},
+                            onChanged: (v) {},
+                            keyboardType: TextInputType.emailAddress,
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 20,
+                            ),
+                            decoration: const InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent, width: 0),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              hintText: 'Confirm Password',
+                              hintStyle: TextStyle(
+                                color: Colors.black38,
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              errorStyle: TextStyle(color: Colors.white70),
+                              suffixIcon: Icon(
+                                Icons.visibility_off,
+                                color: Colors.black45,
+                              ),
+                              fillColor: Color(0xFFFFFFFF),
+                              filled: true,
+                            ),
+                            autocorrect: false,
+                            autofocus: false,
+                          ),
+                          MaterialButton(
+                            elevation: 0,
+                            hoverElevation: 0,
+                            focusElevation: 0,
+                            highlightElevation: 0,
+                            onPressed: () => print(0),
+                            color: Color(0xFFFFEB3C),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.only(
+                                  bottomLeft: Radius.circular(10),
+                                  bottomRight: Radius.circular(10)),
+                            ),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width - 50,
+                              height: 60,
+                              alignment: Alignment.center,
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Sign Up!',
+                                    style: TextStyle(
+                                        color: Colors.black, fontSize: 18),
+                                  ),
+                                  Icon(Icons.arrow_forward)
+                                ],
+                              ),
+                            ),
+                          ),
+                        ],
+                      )),
                   SizedBox(
                     height: 15,
                   ),
