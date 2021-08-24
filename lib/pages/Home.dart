@@ -1,16 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_interview_1/pages/SignUp.dart';
+import 'package:flutter_interview_1/api.dart';
+import 'package:flutter_interview_1/pages/SignIn.dart';
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  final String name;
+  final String id;
+  final String token;
+  final String email;
+
+  const HomeScreen(this.name, this.email, this.id, this.token);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  TextEditingController email = TextEditingController();
-  TextEditingController password = TextEditingController();
+  bool isloading = false;
+  Api api = Api();
 
   @override
   Widget build(BuildContext context) {
@@ -42,180 +48,97 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Sign In',
-                      style: TextStyle(color: Colors.white, fontSize: 30)),
-                  SizedBox(
-                    height: 10,
-                  ),
-                  Text('Login to start posting free ads & premium ads',
-                      style: TextStyle(color: Colors.white, fontSize: 14)),
-                  SizedBox(
-                    height: 20,
-                  ),
-                  Form(
-                      child: Column(
-                    children: [
-                      TextFormField(
-                        controller: email,
-                        validator: (email) {},
-                        onChanged: (v) {},
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 20,
-                        ),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(10),
-                                  topRight: Radius.circular(10))),
-                          hintText: 'Email Address',
-                          hintStyle: TextStyle(
-                            color: Colors.white60,
-                          ),
-                          errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          errorStyle: TextStyle(color: Colors.white70),
-                          suffixIcon: Icon(Icons.email),
-                          fillColor: Color(0xFFFFFFFF),
-                          filled: true,
-                        ),
-                        autocorrect: false,
-                        autofocus: false,
-                      ),
-                      TextFormField(
-                        controller: password,
-                        validator: (email) {},
-                        onChanged: (v) {},
-                        keyboardType: TextInputType.emailAddress,
-                        style: TextStyle(
-                          color: Colors.black38,
-                          fontSize: 20,
-                        ),
-                        decoration: const InputDecoration(
-                          enabledBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.transparent),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedBorder: OutlineInputBorder(
-                              borderSide: BorderSide(color: Colors.white),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          focusedErrorBorder: OutlineInputBorder(
-                              borderSide: BorderSide(
-                                  color: Colors.transparent, width: 0),
-                              borderRadius: BorderRadius.only(
-                                  topLeft: Radius.circular(0),
-                                  topRight: Radius.circular(0))),
-                          hintText: 'Email Address',
-                          hintStyle: TextStyle(
-                            color: Colors.white60,
-                          ),
-                          errorBorder: OutlineInputBorder(
-                              borderSide:
-                                  BorderSide(color: Colors.transparent)),
-                          errorStyle: TextStyle(color: Colors.white70),
-                          suffixIcon: Icon(Icons.visibility_off),
-                          fillColor: Color(0xFFFFFFFF),
-                          filled: true,
-                        ),
-                        autocorrect: false,
-                        autofocus: false,
-                      ),
-                      MaterialButton(
-                        elevation: 0,
-                        hoverElevation: 0,
-                        focusElevation: 0,
-                        highlightElevation: 0,
-                        onPressed: () => print(0),
-                        color: Color(0xFFFFEB3C),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                              bottomLeft: Radius.circular(10),
-                              bottomRight: Radius.circular(10)),
-                        ),
-                        child: Container(
-                          width: MediaQuery.of(context).size.width - 50,
-                          height: 60,
-                          alignment: Alignment.center,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                'Login!',
+                  Center(
+                    child: ClipOval(
+                      child: Material(
+                        color: Color(0xFFFFEB3C), // button color
+                        child: InkWell(
+                          splashColor: Colors.transparent, // inkwell color
+                          child: SizedBox(
+                              width: 100,
+                              height: 100,
+                              child: Center(
+                                  child: Text(
+                                widget.name.toUpperCase().substring(0, 1),
                                 style: TextStyle(
-                                    color: Colors.black, fontSize: 18),
-                              ),
-                              Icon(Icons.arrow_forward)
-                            ],
-                          ),
+                                    color: Colors.black, fontSize: 36),
+                              ))),
+                          onTap: () {},
                         ),
                       ),
-                    ],
-                  )),
-                  SizedBox(
-                    height: 15,
+                    ),
                   ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      InkWell(
-                        child: Text(
-                          'Forgot Password?',
-                          style: TextStyle(color: Colors.black45, fontSize: 16),
-                        ),
-                      ),
-                    ],
+                  Center(
+                    child: Text(
+                      widget.name.toUpperCase(),
+                      style: TextStyle(color: Colors.white, fontSize: 36),
+                    ),
                   ),
-                  SizedBox(
-                    height: 30,
-                    child: Divider(
-                      thickness: 1,
-                      color: Colors.black26,
+                  Center(
+                    child: Text(
+                      widget.email,
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ),
                   SizedBox(
-                    height: 10,
+                    height: height / 2.5,
                   ),
-                  Center(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      children: [
-                        Text(
-                          "Don't have an account yet?",
-                          style: TextStyle(color: Colors.black45, fontSize: 16),
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        InkWell(
-                          onTap: () {
-                            Navigator.push(context,
-                                MaterialPageRoute(builder: (context) {
-                              return SignUpScreen();
-                            }));
-                          },
-                          child: Text(
-                            'Sign Up',
-                            style: TextStyle(color: Colors.black, fontSize: 24),
+                  MaterialButton(
+                    elevation: 0,
+                    hoverElevation: 0,
+                    focusElevation: 0,
+                    highlightElevation: 0,
+                    onPressed: () async {
+                      setState(() {
+                        isloading = true;
+                      });
+                      try {
+                        final response = await api.deleteAccount(widget.token);
+                        print(response);
+                        setState(() {
+                          isloading = false;
+                        });
+                        Navigator.pushReplacement(context,
+                            MaterialPageRoute(builder: (context) {
+                          return SignInScreen();
+                        }));
+                      } catch (err) {
+                        print(err.toString());
+                        setState(() {
+                          isloading = false;
+                        });
+                        final snackBar = SnackBar(
+                            content: Text('Invalid Username/Password'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                      }
+                    },
+                    color: Colors.red,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Container(
+                      width: MediaQuery.of(context).size.width - 50,
+                      height: 60,
+                      alignment: Alignment.center,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'Log out!',
+                            style: TextStyle(color: Colors.white, fontSize: 18),
                           ),
-                        ),
-                      ],
+                          isloading
+                              ? CircularProgressIndicator(
+                                  backgroundColor: Colors.white,
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                      Colors.black),
+                                )
+                              : Icon(
+                                  Icons.logout,
+                                  color: Colors.white,
+                                )
+                        ],
+                      ),
                     ),
                   ),
                 ],

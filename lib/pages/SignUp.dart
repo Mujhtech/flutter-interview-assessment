@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_1/api.dart';
+import 'package:flutter_interview_1/pages/Home.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -15,6 +17,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController phone = TextEditingController();
   final formKey = GlobalKey<FormState>();
   bool _passwordVisible = false;
+  bool isloading = false;
+  Api api = Api();
 
   @override
   Widget build(BuildContext context) {
@@ -164,57 +168,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             autofocus: false,
                           ),
                           TextFormField(
-                            controller: phone,
-                            validator: (email) {
-                              if (email!.isEmpty)
-                                return 'Phone Number Field is required';
-                              else
-                                return null;
-                            },
-                            onChanged: (v) {},
-                            keyboardType: TextInputType.phone,
-                            style: TextStyle(
-                              color: Colors.black38,
-                              fontSize: 20,
-                            ),
-                            decoration: InputDecoration(
-                              enabledBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(0),
-                                      topRight: Radius.circular(0))),
-                              focusedBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(color: Colors.white),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(0),
-                                      topRight: Radius.circular(0))),
-                              focusedErrorBorder: OutlineInputBorder(
-                                  borderSide: BorderSide(
-                                      color: Colors.transparent, width: 0),
-                                  borderRadius: BorderRadius.only(
-                                      topLeft: Radius.circular(0),
-                                      topRight: Radius.circular(0))),
-                              hintText: 'Phone Number',
-                              hintStyle: TextStyle(
-                                color: Colors.black38,
-                              ),
-                              errorBorder: OutlineInputBorder(
-                                  borderSide:
-                                      BorderSide(color: Colors.transparent)),
-                              errorStyle: TextStyle(color: Colors.black38),
-                              suffixIcon: Icon(
-                                Icons.phone,
-                                color: Colors.black45,
-                              ),
-                              prefixText: "🇳🇬 +234",
-                              fillColor: Color(0xFFFFFFFF),
-                              filled: true,
-                            ),
-                            autocorrect: false,
-                            autofocus: false,
-                          ),
-                          TextFormField(
                             controller: password,
                             validator: (password) {
                               if (password!.isEmpty)
@@ -345,6 +298,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
+                              setState(() {
+                                isloading = true;
+                              });
+                              setState(() {
+                                isloading = true;
+                              });
+                              try {
+                                final response = await api.register(
+                                    name.text.trim(),
+                                    email.text.trim(),
+                                    password.text.trim());
+                                print(response);
+                                setState(() {
+                                  isloading = false;
+                                });
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return HomeScreen(
+                                      response['user']['name'],
+                                      response['user']['email'],
+                                      response['user']['id'],
+                                      response['token']);
+                                }));
+                              } catch (err) {
+                                print(err.toString());
+                                setState(() {
+                                  isloading = false;
+                                });
+                                final snackBar = SnackBar(
+                                    content: Text('Invalid Username/Password'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             },
                             color: Color(0xFFFFEB3C),
                             shape: RoundedRectangleBorder(
@@ -365,7 +351,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 18),
                                   ),
-                                  Icon(Icons.arrow_forward)
+                                  isloading
+                                      ? CircularProgressIndicator(
+                                          backgroundColor: Colors.black38,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.green),
+                                        )
+                                      : Icon(Icons.arrow_forward)
                                 ],
                               ),
                             ),

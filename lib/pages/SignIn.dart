@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_interview_1/api.dart';
+import 'package:flutter_interview_1/pages/Home.dart';
 import 'package:flutter_interview_1/pages/SignUp.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -12,8 +14,10 @@ class _SignInScreenState extends State<SignInScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
+  bool isloading = false;
   bool _passwordVisible = false;
+
+  Api api = Api();
 
   @override
   Widget build(BuildContext context) {
@@ -181,6 +185,34 @@ class _SignInScreenState extends State<SignInScreen> {
                               if (!formKey.currentState!.validate()) {
                                 return;
                               }
+                              setState(() {
+                                isloading = true;
+                              });
+                              try {
+                                final response = await api.login(
+                                    email.text.trim(), password.text.trim());
+
+                                setState(() {
+                                  isloading = false;
+                                });
+                                Navigator.pushReplacement(context,
+                                    MaterialPageRoute(builder: (context) {
+                                  return HomeScreen(
+                                      response['user']['name'],
+                                      response['user']['email'],
+                                      response['user']['_id'],
+                                      response['token']);
+                                }));
+                              } catch (err) {
+                                print(err.toString());
+                                setState(() {
+                                  isloading = false;
+                                });
+                                final snackBar = SnackBar(
+                                    content: Text('Invalid Username/Password'));
+                                ScaffoldMessenger.of(context)
+                                    .showSnackBar(snackBar);
+                              }
                             },
                             color: Color(0xFFFFEB3C),
                             shape: RoundedRectangleBorder(
@@ -201,7 +233,14 @@ class _SignInScreenState extends State<SignInScreen> {
                                     style: TextStyle(
                                         color: Colors.black, fontSize: 18),
                                   ),
-                                  Icon(Icons.arrow_forward)
+                                  isloading
+                                      ? CircularProgressIndicator(
+                                          backgroundColor: Colors.black38,
+                                          valueColor:
+                                              AlwaysStoppedAnimation<Color>(
+                                                  Colors.green),
+                                        )
+                                      : Icon(Icons.arrow_forward)
                                 ],
                               ),
                             ),

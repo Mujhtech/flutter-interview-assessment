@@ -13,7 +13,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        splashColor: Colors.transparent,
         textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black45),
       ),
       home: SignInScreen(),
