@@ -12,8 +12,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
   TextEditingController confirmPassword = TextEditingController();
+  TextEditingController phone = TextEditingController();
   final formKey = GlobalKey<FormState>();
-
+  bool _passwordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           body: SingleChildScrollView(
             child: Container(
-              padding: EdgeInsets.fromLTRB(15, height / 10, 15, 0),
+              padding: EdgeInsets.fromLTRB(15, height / 10, 15, height / 10),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,9 +61,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         children: [
                           TextFormField(
                             controller: name,
-                            validator: (email) {},
+                            validator: (name) {
+                              if (name!.isEmpty)
+                                return 'Name Field is required';
+                              else
+                                return null;
+                            },
                             onChanged: (v) {},
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.text,
                             style: TextStyle(
                               color: Colors.black38,
                               fontSize: 20,
@@ -92,7 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent)),
-                              errorStyle: TextStyle(color: Colors.white70),
+                              errorStyle: TextStyle(color: Colors.black38),
                               suffixIcon: Icon(
                                 Icons.person,
                                 color: Colors.black45,
@@ -105,7 +111,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ),
                           TextFormField(
                             controller: email,
-                            validator: (email) {},
+                            validator: (email) {
+                              RegExp regex = new RegExp(
+                                  r'^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$');
+                              if (email!.isEmpty)
+                                return 'Email address Field is required';
+                              else if (!regex.hasMatch(email))
+                                return 'Email address is not valid';
+                              else
+                                return null;
+                            },
                             onChanged: (v) {},
                             keyboardType: TextInputType.emailAddress,
                             style: TextStyle(
@@ -137,7 +152,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent)),
-                              errorStyle: TextStyle(color: Colors.white70),
+                              errorStyle: TextStyle(color: Colors.black38),
                               suffixIcon: Icon(
                                 Icons.email,
                                 color: Colors.black45,
@@ -149,15 +164,71 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             autofocus: false,
                           ),
                           TextFormField(
-                            controller: password,
-                            validator: (password) {},
+                            controller: phone,
+                            validator: (email) {
+                              if (email!.isEmpty)
+                                return 'Phone Number Field is required';
+                              else
+                                return null;
+                            },
                             onChanged: (v) {},
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.phone,
                             style: TextStyle(
                               color: Colors.black38,
                               fontSize: 20,
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
+                              enabledBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: Colors.white),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              focusedErrorBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(
+                                      color: Colors.transparent, width: 0),
+                                  borderRadius: BorderRadius.only(
+                                      topLeft: Radius.circular(0),
+                                      topRight: Radius.circular(0))),
+                              hintText: 'Phone Number',
+                              hintStyle: TextStyle(
+                                color: Colors.black38,
+                              ),
+                              errorBorder: OutlineInputBorder(
+                                  borderSide:
+                                      BorderSide(color: Colors.transparent)),
+                              errorStyle: TextStyle(color: Colors.black38),
+                              suffixIcon: Icon(
+                                Icons.phone,
+                                color: Colors.black45,
+                              ),
+                              prefixText: "🇳🇬 +234",
+                              fillColor: Color(0xFFFFFFFF),
+                              filled: true,
+                            ),
+                            autocorrect: false,
+                            autofocus: false,
+                          ),
+                          TextFormField(
+                            controller: password,
+                            validator: (password) {
+                              if (password!.isEmpty)
+                                return 'Password Field is required';
+                              else
+                                return null;
+                            },
+                            onChanged: (v) {},
+                            keyboardType: TextInputType.visiblePassword,
+                            style: TextStyle(
+                              color: Colors.black38,
+                              fontSize: 20,
+                            ),
+                            decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent),
@@ -182,27 +253,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent)),
-                              errorStyle: TextStyle(color: Colors.white70),
-                              suffixIcon: Icon(
-                                Icons.visibility_off,
-                                color: Colors.black45,
+                              errorStyle: TextStyle(color: Colors.black38),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                                child: Icon(
+                                  _passwordVisible
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.black45,
+                                ),
                               ),
                               fillColor: Color(0xFFFFFFFF),
                               filled: true,
                             ),
+                            obscureText: !_passwordVisible,
                             autocorrect: false,
                             autofocus: false,
                           ),
                           TextFormField(
                             controller: confirmPassword,
-                            validator: (password) {},
+                            validator: (pp) {
+                              if (pp!.isEmpty)
+                                return 'Confirm Password Field is required';
+                              else if (pp != password.text.trim())
+                                return 'Password must be match';
+                              else
+                                return null;
+                            },
                             onChanged: (v) {},
-                            keyboardType: TextInputType.emailAddress,
+                            keyboardType: TextInputType.visiblePassword,
                             style: TextStyle(
                               color: Colors.black38,
                               fontSize: 20,
                             ),
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                               enabledBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent),
@@ -227,14 +315,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               errorBorder: OutlineInputBorder(
                                   borderSide:
                                       BorderSide(color: Colors.transparent)),
-                              errorStyle: TextStyle(color: Colors.white70),
-                              suffixIcon: Icon(
-                                Icons.visibility_off,
-                                color: Colors.black45,
+                              errorStyle: TextStyle(color: Colors.black38),
+                              suffixIcon: GestureDetector(
+                                onTap: () {
+                                  setState(() {
+                                    _passwordVisible = !_passwordVisible;
+                                  });
+                                },
+                                child: Icon(
+                                  _passwordVisible
+                                      ? Icons.visibility_off
+                                      : Icons.visibility,
+                                  color: Colors.black45,
+                                ),
                               ),
                               fillColor: Color(0xFFFFFFFF),
                               filled: true,
                             ),
+                            obscureText: !_passwordVisible,
                             autocorrect: false,
                             autofocus: false,
                           ),
@@ -243,7 +341,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             hoverElevation: 0,
                             focusElevation: 0,
                             highlightElevation: 0,
-                            onPressed: () => print(0),
+                            onPressed: () async {
+                              if (!formKey.currentState!.validate()) {
+                                return;
+                              }
+                            },
                             color: Color(0xFFFFEB3C),
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.only(
